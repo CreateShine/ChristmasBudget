@@ -1,0 +1,82 @@
+//Notes: Copy Any budget (not last year's) also do at group level and just divide it by number of group members
+
+0) Main screen
+    Option 1 - Create a new Christmas Budget
+    Option 2 - Edit existing Christmas Budget
+    Option 3 - View Christmas Budget (Prints to screen)
+1) Create a new "Christmas Gift" budget profile.
+    a. Prompt user for name of budget.
+    b. Allow user to copy an existing budget and change name if desired (So they could copy last year's budget and rename to this year).
+             - If "Yes" default amounts are chosen update groups and budget amounts to be same as "last year" or default value.
+                i. Then, take user to Main screen again.
+            - If "No" default amounts are not chosen then prompt user to enter group budget amounts.
+    c. User selects from common categories in budget or creates new group(s) with other.
+        - Common groups: Inlaws - His, Inlaws - Hers, PersonalFamily, Neighbors, Friends, Other
+        - If Other is chosen prompt user to enter name string. Multiple "Others" can be created. 
+        - Have User click "done" when this step is complete.
+    d. Prompt user to enter sub-group categories/names.
+        - For each group chosen,  allow user to enter names of individuals within that group for whom gift will be bought.
+        - Have user click "done"
+    e. Prompt user to enter total budget and group amounts. 
+        - Display total budget and group titles and prompt user to enter group budget amounts for each.
+                i. Then, take user to next step.
+    b. Allow user to adjust total amounts for each group budget. Show running total and flag if greater than total budget.
+            - Have User click "done" when this step is complete.
+            - If greater than total budget, do not allow user to move to next step. Ask if user would like to increase
+              budget or adjust group totals.
+            - Return to main screen
+2) Allow User to Edit Christmas Budget
+    a. Have user select Christmas budget to edit. If no budget has been created, show error - you must create a budget first.
+    b. User selects Christmas budget.
+    c. User can now adjust individual (sub-group) dollar amounts and new total will calculate. (See code above)
+3) View Summary of Christmas budget
+    a. Have user select Christmas budget to show. If no budget has been created, show error - you must create a budget first.
+    b. User selects Christmas budget.
+    c. Budget prints to screen showing group sub-totals and overall Christmas budget total.
+              
+Total budget?
+100
+
+Set group budgets, must be below $100 (currently $0)
+
+Adjust total budget
+Inlaws - Dad - $0
+Inlaws - Mom - $0
+PersonalFamily - $0
+Friends - $0
+Done
+
+Set group budget for PersonalFamily
+$102
+
+Set group budgets, must be below $100 (currently $102)
+
+Adjust total budget
+Inlaws - Dad - $0
+Inlaws - Mom - $0
+PersonalFamily - $102
+Friends - $0
+Done
+
+Nope you can't
+
+Set group budgets, must be below $100 (currently $102)
+
+Adjust total budget
+Inlaws - Dad - $0
+Inlaws - Mom - $0
+PersonalFamily - $102
+Friends - $0
+Done
+
+Total budget?
+102
+
+Set group budgets, must be below $102 (currently $102)
+
+Adjust total budget
+Inlaws - Dad - $0
+Inlaws - Mom - $0
+PersonalFamily - $102
+Friends - $0
+Done

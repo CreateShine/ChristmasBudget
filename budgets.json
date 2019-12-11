@@ -1,0 +1,80 @@
+[
+    {
+        "Name": "Hap",
+        "TotalPrice": 70,
+        "Groups": [
+            {
+                "Name": "Inlaws - His",
+                "People": null,
+                "GroupPrice": 70
+            },
+            {
+                "Name": "Inlaws - Hers",
+                "People": null,
+                "GroupPrice": 0
+            },
+            {
+                "Name": "Personal Family",
+                "People": null,
+                "GroupPrice": 0
+            },
+            {
+                "Name": "Done",
+                "People": null,
+                "GroupPrice": 0
+            }
+        ]
+    },
+    {
+        "Name": "2018",
+        "TotalPrice": 800,
+        "Groups": [
+            {
+                "Name": "Inlaws - His",
+                "People": null,
+                "GroupPrice": 150
+            },
+            {
+                "Name": "Inlaws - Hers",
+                "People": null,
+                "GroupPrice": 150
+            },
+            {
+                "Name": "Personal Family",
+                "People": null,
+                "GroupPrice": 500
+            },
+            {
+                "Name": "Done",
+                "People": null,
+                "GroupPrice": 0
+            }
+        ]
+    },
+    {
+        "Name": "Ja",
+        "TotalPrice": 70,
+        "Groups": [
+            {
+                "Name": "Inlaws - His",
+                "People": null,
+                "GroupPrice": 70
+            },
+            {
+                "Name": "Inlaws - Hers",
+                "People": null,
+                "GroupPrice": 0
+            },
+            {
+                "Name": "Personal Family",
+                "People": null,
+                "GroupPrice": 0
+            },
+            {
+                "Name": "Done",
+                "People": null,
+                "GroupPrice": 0
+            }
+        ]
+    }
+]
