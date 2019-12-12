@@ -1,8 +1,20 @@
 package budgetapi
 
 import (
+	"database/sql"
 	"fmt"
 )
+
+//Connection to Database
+type BudgetsService struct {
+	db *sql.DB
+}
+
+func NewService(db *sql.DB) *BudgetsService {
+	return &BudgetsService{
+		db: db,
+	}
+}
 
 //Naming of variables
 var (
@@ -24,13 +36,6 @@ type Group struct {
 func SetBudgets(a []*Budget) {
 	budgets = a
 }
-
-//Added this code from Arcades CLI. Not sure if it is needed.
-/*func New(budgetsService *budgets.BudgetsService) *CLI {
-return &CLI{
-	Name:     "",
-	budgetsService: budgetsService,
-}*/
 
 //Creation of a new Christmas Budget
 

@@ -5,10 +5,14 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-	"strings"
+
+	//"strings"
+	"os"
 
 	"github.com/CreateShine/ChristmasBudget/budgetapi"
 	"github.com/CreateShine/ChristmasBudget/db"
+	"github.com/CreateShine/ChristmasBudget/storage"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/manifoldco/promptui"
 )
 
@@ -17,6 +21,8 @@ const (
 	viewAndEditBudget = "View and Edit Budget"
 )
 
+var budgetsService *budgetapi.BudgetsService
+
 func main() {
 	db, err := db.ConnectDatabase("budgets_db.config")
 	if err != nil {
@@ -24,10 +30,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	budgetsService := budgets.NewService(db)
+	budgetsService := budgetapi.NewService(db)
 
 	//Prompt user to choose whether to create a new budget or copy old
 	for {
+
 		fmt.Println("Welcome to ChristmasBudget!")
 
 		prompt := promptui.Select{
@@ -54,19 +61,10 @@ func main() {
 			if err != nil {
 				fmt.Println("No Budgets to View.", err)
 			}
-			
+
 		}
+
 		time.Sleep(3000 * time.Millisecond)
-
-		//If create new then have user fill in new budget details
-		//Prompt User to Choose BudgetGroups
-		//Promt User to Choose budget amounts for group
-		//Prompt User to Input Names for Each Budget Group
-		/*Display print of budget and say "Great - you are done!"
-		and option to edit or return to main screen*/
-
-		//If copy then prompt user "Type the New Name"
-		//Allow user to edit
 
 	}
 }
@@ -94,11 +92,7 @@ func addBudgetPrompt() error {
 	budgetapi.CreateBudget(newBudget)
 	editGroupPrompt(newBudget)
 
-	err = storage.Save()
-	if err != nil {
-		return err
-	}
-
+	budgetsService.addBudgetPrompt(budgetName, budgetTotal)
 	fmt.Println("Well done you created: ", budgetName)
 	return nil
 }
@@ -173,6 +167,7 @@ func viewBudgetPrompt() error {
 	fmt.Println("Name:", chosenBudget.Name, ", Total Price: $", chosenBudget.TotalPrice, ", Groups:")
 
 	editGroupPrompt(chosenBudget)
+	//budgetsService.AddArcade(name, price)
 	err = storage.Save()
 	if err != nil {
 		return err
