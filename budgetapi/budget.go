@@ -5,6 +5,14 @@ import (
 	"fmt"
 )
 
+const (
+	insertBudgetQuery = "INSERT INTO budgets (id, budget_name, budget_price) VALUES (?, ?,?);"
+
+	selectBudgetsQuery = "SELECT id, budget_name, budget_price FROM budgets"
+
+	groupNames = "Inlaws-His, Inlaws-Hers, Personal Family"
+)
+
 //Connection to Database
 type BudgetsService struct {
 	db *sql.DB
@@ -22,6 +30,7 @@ var (
 )
 
 type Budget struct {
+	ID         float64
 	Name       string
 	TotalPrice float64
 	Groups     []*Group
@@ -38,11 +47,12 @@ func SetBudgets(a []*Budget) {
 }
 
 //Creation of a new Christmas Budget
-
 //This function allows the user to create a new budget and then adds it to the list of budgets
-func CreateBudget(budget *Budget) {
+func (b *BudgetsService) CreateBudget(budgetName string, budgetPrice float64, groups string) error {
+	_, err := b.db.Exec(insertBudgetQuery, budgetName, budgetPrice, groupNames)
 
-	budget.Groups = []*Group{
+	//Do a query to find out what the budget ID is and then insert this ID into each of the groups
+	/*Groups = []*Group{
 		&Group{
 			Name:       "Inlaws - His",
 			People:     nil,
@@ -63,36 +73,41 @@ func CreateBudget(budget *Budget) {
 			People:     nil,
 			GroupPrice: 0,
 		},
+	}*/
+	//budgets = append(budgets, budget)
+	if err != nil {
+		return err
 	}
-	budgets = append(budgets, budget)
 
+	return nil
 }
 
 //This function displays a list of budgets (so user can then copy or edit)
-func ListBudgets() []*Budget {
-	return budgets
+func (b *BudgetsService) ListBudgets() ([]*Budget, error) {
+	rows, err := b.db.Query(selectBudgetsQuery)
+	if err != nil {
+		return nil, err
+	}
+	var budgets []*Budget
+	for rows.Next() {
+		var budget *Budget
+
+		err := rows.Scan(
+			&budget.ID,
+			&budget.Name,
+			&budget.TotalPrice,
+			&budget.Groups,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		budgets = append(budgets, budget)
+	}
+
+	return budgets, nil
 }
 
 func (G *Group) PrintName() {
 	fmt.Println(G.Name)
-}
-
-//This group allows you to edit a budget.
-//First, list the budgets you could choose from to edit. And allow to select
-func ListBudgetsToEdit() {
-	//fmt.Println(budgets)
-	//return budgets
-
-	/*editPrompt := promptui.Select{
-		Label: "Choose Which Budget to Edit",
-		Items: budgets,
-	}
-	_, result, err := editPrompt.Run()
-
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		return
-	}
-	return
-		//fmt.Printf("You choose %q\n", result)*/
 }

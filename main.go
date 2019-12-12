@@ -11,7 +11,6 @@ import (
 
 	"github.com/CreateShine/ChristmasBudget/budgetapi"
 	"github.com/CreateShine/ChristmasBudget/db"
-	"github.com/CreateShine/ChristmasBudget/storage"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/manifoldco/promptui"
 )
@@ -31,6 +30,7 @@ func main() {
 	}
 
 	budgetsService := budgetapi.NewService(db)
+	fmt.Println(budgetsService)
 
 	//Prompt user to choose whether to create a new budget or copy old
 	for {
@@ -89,10 +89,10 @@ func addBudgetPrompt() error {
 		TotalPrice: budgetTotal,
 		Groups:     nil,
 	}
-	budgetapi.CreateBudget(newBudget)
+	budgetsService.CreateBudget(newBudget.Name, newBudget.TotalPrice, "groups")
 	editGroupPrompt(newBudget)
 
-	budgetsService.addBudgetPrompt(budgetName, budgetTotal)
+	//budgetsService.addBudgetPrompt(budgetName, budgetTotal)
 	fmt.Println("Well done you created: ", budgetName)
 	return nil
 }
@@ -113,21 +113,25 @@ func promptForNumber(label string) (float64, error) {
 }
 
 func editBudgetPrompt() error {
-	availableBudgetsToEdit := budgetapi.ListBudgets()
-
+	availableBudgetsToEdit, err := budgetsService.ListBudgets()
+	if err != nil {
+		return err
+	}
 	if len(availableBudgetsToEdit) == 0 {
 		return errors.New("Need to Create Budget")
 	}
 
-	budgetapi.ListBudgetsToEdit()
+	budgetsService.ListBudgets()
 	time.Sleep(5000 * time.Millisecond)
 	return nil
 }
 
 //Returns a list of budgets available
 func viewBudgetPrompt() error {
-	availableBudgets := budgetapi.ListBudgets()
-
+	availableBudgets, err := budgetsService.ListBudgets()
+	if err != nil {
+		return err
+	}
 	fmt.Println("here3")
 	if len(availableBudgets) == 0 {
 		return errors.New("No budgets created")
@@ -168,10 +172,10 @@ func viewBudgetPrompt() error {
 
 	editGroupPrompt(chosenBudget)
 	//budgetsService.AddArcade(name, price)
-	err = storage.Save()
+	/*err = storage.Save()
 	if err != nil {
 		return err
-	}
+	}*/
 	//time.Sleep(5000 * time.Millisecond)
 	return nil
 }

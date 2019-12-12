@@ -7,13 +7,13 @@ USE budgets;
 CREATE TABLE budgets (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     budget_name varchar(255),
-    budget_price varchar(255)
+    budget_price float
 );
 
 CREATE TABLE groups (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     group_name varchar(255),
-    group_price int,
+    group_price float,
     budget_id int,
     people varchar(255),
     FOREIGN KEY (budget_id) REFERENCES budgets(id)
