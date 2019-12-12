@@ -25,6 +25,13 @@ func SetBudgets(a []*Budget) {
 	budgets = a
 }
 
+//Added this code from Arcades CLI. Not sure if it is needed.
+/*func New(budgetsService *budgets.BudgetsService) *CLI {
+return &CLI{
+	Name:     "",
+	budgetsService: budgetsService,
+}*/
+
 //Creation of a new Christmas Budget
 
 //This function allows the user to create a new budget and then adds it to the list of budgets
@@ -84,37 +91,3 @@ func ListBudgetsToEdit() {
 	return
 		//fmt.Printf("You choose %q\n", result)*/
 }
-
-/*func ListGroups() []Group {
-	return arcades
-}*/
-
-//This Function lists the Groups that were chosen for user's budget
-/*func ListChosenGroups() []*BudgetGroup {
-	//Here add functionality that makes it list the groups
-	return &BudgetGroup
-}*/
-
-//Budget needs method called AddBudgetGroup
-//Should this string below be the actual name of Groups
-/*func (b *Budget) AddBudgetGroup() string {
-	groups := []BudgetGroup{"Group1", "Group2", "Group3", "Group4"}
-	addGroupPrompt := promptui.Select{
-		Label: "Which Group Would You Like to Add?",
-		Items: groups,
-	}
-	_, result, err := addGroupPrompt.Run()
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-
-	}
-	return result
-}*/
-
-//BudgetGroup needs method called Add Person
-//func (p *BudgetGroup)
-
-//Budget needs method Verify that price is right - make sure each summed is less  than Total budget - return bool
-/*func (*Budget budgets) CalculateTotalPrice(numberOfGames float64) float64 {
-	return numberOfGames*arcade.PricePerGame + arcade.EntryPrice
-}*/

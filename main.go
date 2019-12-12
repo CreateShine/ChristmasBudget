@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+	"strings"
 
 	"github.com/CreateShine/ChristmasBudget/budgetapi"
-	"github.com/CreateShine/ChristmasBudget/storage"
+	"github.com/CreateShine/ChristmasBudget/db"
 	"github.com/manifoldco/promptui"
 )
 
@@ -17,10 +18,14 @@ const (
 )
 
 func main() {
-	err := storage.Load()
+	db, err := db.ConnectDatabase("budgets_db.config")
 	if err != nil {
-		fmt.Println("Error Loading Arcades from file", err)
+		fmt.Println("Error:", err.Error())
+		os.Exit(1)
 	}
+
+	budgetsService := budgets.NewService(db)
+
 	//Prompt user to choose whether to create a new budget or copy old
 	for {
 		fmt.Println("Welcome to ChristmasBudget!")
