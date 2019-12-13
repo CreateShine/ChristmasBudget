@@ -29,8 +29,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	budgetsService := budgetapi.NewService(db)
-	fmt.Println(budgetsService)
+	budgetsService = budgetapi.NewService(db)
+	//	fmt.Println(budgetsService)
 
 	//Prompt user to choose whether to create a new budget or copy old
 	for {
@@ -84,13 +84,14 @@ func addBudgetPrompt() error {
 		return err
 	}
 
-	newBudget := &budgetapi.Budget{
-		Name:       budgetName,
-		TotalPrice: budgetTotal,
-		Groups:     nil,
+	fmt.Println("here5.", budgetsService)
+	newBudget, err := budgetsService.CreateBudget(budgetName, budgetTotal)
+	if err != nil {
+		return err
 	}
-	budgetsService.CreateBudget(newBudget.Name, newBudget.TotalPrice, "groups")
+	fmt.Println("here6")
 	editGroupPrompt(newBudget)
+	fmt.Println("here7")
 
 	//budgetsService.addBudgetPrompt(budgetName, budgetTotal)
 	fmt.Println("Well done you created: ", budgetName)
@@ -166,17 +167,10 @@ func viewBudgetPrompt() error {
 	}
 	chosenBudget := availableBudgets[chosenIndex]
 
-	//Should I add a function here that looks at which groups are greater than 0 and returns the names of these?
-	//fmt.Println("Name:", chosenBudget.Name)
 	fmt.Println("Name:", chosenBudget.Name, ", Total Price: $", chosenBudget.TotalPrice, ", Groups:")
 
 	editGroupPrompt(chosenBudget)
-	//budgetsService.AddArcade(name, price)
-	/*err = storage.Save()
-	if err != nil {
-		return err
-	}*/
-	//time.Sleep(5000 * time.Millisecond)
+
 	return nil
 }
 
@@ -217,12 +211,7 @@ func editGroupPrompt(newBudget *budgetapi.Budget) error {
 
 		total := sumGroupTotals(newBudget)
 
-		// var budgetGroupAmount []string
-		// for _, budget := range availableGroups {
-		// 	if availableGroups.GroupPrice > 0 {
-		// 		options = append(budgetGroupAmount, arcade.Name)
-		// 	}
-		// }
+		//need to call budgetService
 
 		if total > newBudget.TotalPrice {
 			fmt.Println("Group Totals Exceed Budget Total of", newBudget.TotalPrice)
